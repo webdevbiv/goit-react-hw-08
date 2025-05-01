@@ -37,8 +37,3 @@ const ContactsPage = () => {
 };
 
 export default ContactsPage;
-
-// const ContactsPage = () => {
-//   return <div>ContactsPage</div>;
-// };
-// export default ContactsPage;
