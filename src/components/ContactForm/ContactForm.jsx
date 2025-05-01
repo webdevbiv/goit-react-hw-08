@@ -3,8 +3,6 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import s from './ContactForm.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '../../redux/contactsSlice';
-import { addContact } from '../../redux/contactsOps';
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()
