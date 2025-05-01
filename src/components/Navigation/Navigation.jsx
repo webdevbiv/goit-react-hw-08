@@ -15,7 +15,7 @@ const Navigation = () => {
           underline="none"
           color="inherit"
           sx={{
-            fontSize: '20px',
+            fontSize: { xs: '16px', sm: '20px' },
             '&.active': { fontWeight: 'bold', color: 'primary.main' },
           }}
         >
@@ -28,7 +28,7 @@ const Navigation = () => {
             underline="none"
             color="inherit"
             sx={{
-              fontSize: '20px',
+              fontSize: { xs: '16px', sm: '20px' },
               '&.active': { fontWeight: 'bold', color: 'primary.main' },
             }}
           >

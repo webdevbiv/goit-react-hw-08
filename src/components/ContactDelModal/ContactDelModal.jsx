@@ -1,23 +1,46 @@
+import { Box, Typography, Button, Stack, Paper } from '@mui/material';
+
 const ContactDelModal = ({ name, confirmDelete, cancelDelete }) => {
   return (
-    <div
-      style={{
+    <Paper
+      elevation={4}
+      sx={{
         position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
         height: '100%',
-        top: '0',
-        left: '0',
-        background: '#fff',
-        border: '1px solid #ccc',
-        padding: '0.5rem',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+        bgcolor: 'background.paper',
+        borderColor: 'divider',
+        p: 2,
         zIndex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
       }}
     >
-      <p>Delete {name}?</p>
-      <button onClick={confirmDelete}>Yes</button>
-      <button onClick={cancelDelete}>Cancel</button>
-    </div>
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{
+          wordBreak: 'break-word',
+          overflowWrap: 'anywhere',
+        }}
+      >
+        Delete {name}?
+      </Typography>
+      <Stack direction="row" spacing={2}>
+        <Button variant="contained" color="error" onClick={confirmDelete}>
+          Yes
+        </Button>
+        <Button variant="outlined" onClick={cancelDelete}>
+          Cancel
+        </Button>
+      </Stack>
+    </Paper>
   );
 };
+
 export default ContactDelModal;

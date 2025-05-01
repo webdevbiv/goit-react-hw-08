@@ -1,79 +1,47 @@
 import { BiSolidContact } from 'react-icons/bi';
 import { FaPhone } from 'react-icons/fa6';
 import { Box, Typography, Button, Stack } from '@mui/material';
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import PersonIcon from '@mui/icons-material/Person';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 
 const ContactCard = ({ name, number, handleDeleteClick, handleEditClick }) => {
   return (
     <Box
       display="flex"
       flexDirection="column"
+      justifyContent="space-between"
       gap={2}
       elevation={1}
       sx={{
-        p: 2,
-        maxWidth: 350,
+        minWidth: 261,
         width: '100%',
+        height: '100%',
         wordBreak: 'break-word',
         overflowWrap: 'anywhere',
       }}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{
-          p: 2,
-          maxWidth: 280,
-          width: '100%',
-          wordBreak: 'break-word',
-          overflowWrap: 'anywhere',
-        }}
-      >
-        <PersonIcon size="medium" />
-        <Typography
-          variant="body1"
-          textOverflow="clip"
-          noWrap
-          sx={{
-            maxWidth: '100%',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {name}
-        </Typography>
-      </Stack>
+      <Box sx={{ maxWidth: 261 }}>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <PersonIcon size="medium" />
+          <Typography variant="body1" textOverflow="clip">
+            {name}
+          </Typography>
+        </Stack>
+
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <PhoneAndroidIcon size="medium" />
+          <Typography variant="body1" textOverflow="clip">
+            {number}
+          </Typography>
+        </Stack>
+      </Box>
 
       <Stack
         direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{
-          p: 2,
-          maxWidth: 280,
-          width: '100%',
-          wordBreak: 'break-word',
-          overflowWrap: 'anywhere',
-        }}
+        display={'flex'}
+        justifyContent="center"
+        sx={{ mt: 2, gap: 2 }}
       >
-        <FaPhone size={18} />
-        <Typography
-          variant="body1"
-          textOverflow="clip"
-          noWrap
-          sx={{
-            maxWidth: '100%',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {number}
-        </Typography>
-      </Stack>
-
-      <Stack direction="row" spacing={2} mt={1}>
         <Button
           variant="outlined"
           color="primary"
