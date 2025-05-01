@@ -25,7 +25,7 @@ const ContactsPage = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      {/* <ContactForm /> */}
+      <ContactForm />
       <SearchBox />
       {loading && <FadeLoader />}
       {error && <p>{error}</p>}
