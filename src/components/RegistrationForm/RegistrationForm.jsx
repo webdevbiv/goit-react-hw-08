@@ -1,15 +1,23 @@
-import { login } from '@redux/auth/operations';
+import { register } from '@redux/auth/operations';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading } from '@redux/auth/selectors';
+import { selectIsLoading, selectError } from '@redux/auth/selectors';
 import * as Yup from 'yup';
 import { toast } from 'react-hot-toast';
 
-const LoginSchema = Yup.object().shape({
+const RegistrationSchema = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces')
+    .min(3, 'Name must be at least 3 characters')
+    .max(50, 'Name must be less than 50 characters')
+    .required('Name is required'),
+
   email: Yup.string()
     .trim()
     .email('Invalid email format')
     .required('Email is required'),
+
   password: Yup.string()
     .trim()
     .min(7, 'Password must be at least 7 characters')
@@ -20,20 +28,24 @@ const LoginSchema = Yup.object().shape({
 });
 
 const initialValues = {
+  name: '',
   email: '',
   password: '',
 };
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
   const onSubmit = async (values, { resetForm }) => {
     try {
-      await dispatch(login(values)).unwrap();
-      toast.success('Logged in successfully!');
+      await dispatch(register(values)).unwrap();
+      toast.success('Registered successfully!');
       resetForm();
     } catch (err) {
-      toast.error('Login failed: ' + err.message);
+      toast.error('Registration failed: ' + err.message);
+      console.error('Registration error:', err.message);
     }
   };
 
@@ -41,10 +53,14 @@ const LoginForm = () => {
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={LoginSchema}
+      validationSchema={RegistrationSchema}
     >
       {() => (
         <Form>
+          <label htmlFor="name">Name</label>
+          <Field id="name" name="name" type="text" />
+          <ErrorMessage name="name" component="span" />
+
           <label htmlFor="email">Email</label>
           <Field id="email" name="email" type="email" />
           <ErrorMessage name="email" component="span" />
@@ -54,7 +70,7 @@ const LoginForm = () => {
           <ErrorMessage name="password" component="span" />
 
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Log In'}
+            {isLoading ? 'Registering...' : 'Register'}
           </button>
         </Form>
       )}
@@ -62,4 +78,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;

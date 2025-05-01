@@ -17,14 +17,38 @@ const contactsSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder
-      // Fulfilled
+      // FETCH
+      .addCase(fetchContacts.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loading = false;
       })
+      .addCase(fetchContacts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // ADD
+      .addCase(addContact.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.loading = false;
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // DELETE
+      .addCase(deleteContact.pending, state => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(
@@ -32,42 +56,26 @@ const contactsSlice = createSlice({
         );
         state.loading = false;
       })
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // UPDATE
+      .addCase(updateContact.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(updateContact.fulfilled, (state, action) => {
         state.items = state.items.map(contact =>
           contact.id === action.payload.id ? action.payload : contact
         );
         state.loading = false;
       })
-
-      // Matcher pending
-      .addMatcher(
-        action =>
-          [
-            fetchContacts.pending,
-            addContact.pending,
-            deleteContact.pending,
-            updateContact.pending,
-          ].some(thunk => thunk.match(action)),
-        state => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-
-      // Matcher rejected
-      .addMatcher(
-        action =>
-          [
-            fetchContacts.rejected,
-            addContact.rejected,
-            deleteContact.rejected,
-            updateContact.rejected,
-          ].some(thunk => thunk.match(action)),
-        (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      );
+      .addCase(updateContact.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
