@@ -1,3 +1,39 @@
+@import 'tailwindcss';
+
+@theme {
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+  --animate-fancy-text: fancyText 2s ease-in-out forwards;
+
+  @keyframes fancyText {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      background-size: 200%;
+      background-position: left;
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05) translateY(0);
+      background-position: center;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      background-position: right;
+    }
+  }
+}
+
 /* Reset styles */
 
 html {
