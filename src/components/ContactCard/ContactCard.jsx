@@ -25,7 +25,7 @@ const ContactCard = ({ name, number, handleDeleteClick, handleEditClick }) => {
         spacing={1}
         sx={{
           p: 2,
-          maxWidth: 300,
+          maxWidth: 280,
           width: '100%',
           wordBreak: 'break-word',
           overflowWrap: 'anywhere',
@@ -52,7 +52,7 @@ const ContactCard = ({ name, number, handleDeleteClick, handleEditClick }) => {
         spacing={1}
         sx={{
           p: 2,
-          maxWidth: 300,
+          maxWidth: 280,
           width: '100%',
           wordBreak: 'break-word',
           overflowWrap: 'anywhere',
