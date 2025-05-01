@@ -1,17 +1,22 @@
+import { Box, Typography, Stack } from '@mui/material';
+
 const HomePage = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="flex items-center animate-fancy-text">
-        <h1 className=" text-4xl font-bold text-gray-800">Contacts App</h1>
-        <span
-          className="animate-wiggle ml-2 text-5xl"
-          role="img"
-          aria-label="Greeting icon"
-        >
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      <Box spacing={2} alignItems="center" display="flex">
+        <Typography variant="h2" component="h1" fontWeight="bold">
+          Contacts App
+        </Typography>
+        <Typography variant="h1" component="span" role="img" aria-label="phone">
           📲
-        </span>
-      </div>
-    </div>
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

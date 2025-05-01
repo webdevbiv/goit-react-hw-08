@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useEffect } from 'react';
-import { FadeLoader } from 'react-spinners';
 import ContactForm from '@components/ContactForm/ContactForm';
 import SearchBox from '@components/SearchBox/SearchBox';
 import ContactList from '@components/ContactList/ContactList';
@@ -11,6 +9,13 @@ import {
   selectError,
   selectIsLoading,
 } from '@redux/contacts/selectors';
+import {
+  Container,
+  Typography,
+  Box,
+  CircularProgress,
+  Alert,
+} from '@mui/material';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -23,16 +28,52 @@ const ContactsPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      {loading && <FadeLoader />}
-      {error && <p>{error}</p>}
-      {contacts.length === 0 && <p>No contacts found.</p>}
-      {contacts.length > 0 && <p>Total contacts: {contacts.length}</p>}
-      {contacts.length > 0 && <ContactList />}
-    </div>
+    <Container
+      maxWidth="md"
+      sx={{
+        py: 1,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Typography variant="h5" component="h1" gutterBottom textAlign="center">
+        Phonebook
+      </Typography>
+      <Box mb={2}>
+        <ContactForm />
+      </Box>
+
+      <Box mb={2}>
+        <SearchBox />
+      </Box>
+
+      {loading && (
+        <Box display="flex" justifyContent="center" my={4}>
+          <CircularProgress />
+        </Box>
+      )}
+
+      {error && (
+        <Alert severity="error" sx={{ my: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      {contacts.length === 0 && !loading && (
+        <Typography variant="body1" color="text.secondary">
+          No contacts found.
+        </Typography>
+      )}
+
+      {contacts.length > 0 && (
+        <>
+          <Typography variant="body1" color="text.secondary" mb={2}>
+            Total contacts: {contacts.length}
+          </Typography>
+          <ContactList />
+        </>
+      )}
+    </Container>
   );
 };
 

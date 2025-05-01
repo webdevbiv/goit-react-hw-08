@@ -1,9 +1,16 @@
 import { register } from '@redux/auth/operations';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectError } from '@redux/auth/selectors';
 import * as Yup from 'yup';
 import { toast } from 'react-hot-toast';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const RegistrationSchema = Yup.object().shape({
   name: Yup.string()
@@ -12,12 +19,10 @@ const RegistrationSchema = Yup.object().shape({
     .min(3, 'Name must be at least 3 characters')
     .max(50, 'Name must be less than 50 characters')
     .required('Name is required'),
-
   email: Yup.string()
     .trim()
     .email('Invalid email format')
     .required('Email is required'),
-
   password: Yup.string()
     .trim()
     .min(7, 'Password must be at least 7 characters')
@@ -52,26 +57,104 @@ const RegistrationForm = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
       validationSchema={RegistrationSchema}
+      onSubmit={onSubmit}
     >
-      {() => (
+      {({ values, handleChange, handleBlur, touched, errors }) => (
         <Form>
-          <label htmlFor="name">Name</label>
-          <Field id="name" name="name" type="text" />
-          <ErrorMessage name="name" component="span" />
+          <Box
+            pt="30px"
+            px={2}
+            display="flex"
+            flexDirection="column"
+            maxWidth={350}
+            mx="auto"
+          >
+            {error && (
+              <Typography color="error" textAlign="center">
+                {error}
+              </Typography>
+            )}
 
-          <label htmlFor="email">Email</label>
-          <Field id="email" name="email" type="email" />
-          <ErrorMessage name="email" component="span" />
+            <TextField
+              fullWidth
+              id="name"
+              name="name"
+              label="Name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.name && Boolean(errors.name)}
+              helperText={touched.name && errors.name}
+              sx={{
+                mb: '28px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
 
-          <label htmlFor="password">Password</label>
-          <Field id="password" name="password" type="password" />
-          <ErrorMessage name="password" component="span" />
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+              sx={{
+                mb: '28px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
 
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Registering...' : 'Register'}
-          </button>
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              sx={{
+                mb: '28px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+              startIcon={isLoading && <CircularProgress size={20} />}
+              sx={{
+                mr: 'auto',
+                ml: 'auto',
+                pl: '30px',
+                pr: '30px',
+                minWidth: '98px',
+              }}
+            >
+              {isLoading ? null : 'Register'}
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>

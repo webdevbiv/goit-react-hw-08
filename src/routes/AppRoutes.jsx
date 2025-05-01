@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
-import { AppBar } from '@components/AppBar/AppBar';
+import AppBar from '@components/AppBar/AppBar';
 import HomePage from '@pages/HomePage/HomePage';
 import RegistrationPage from '@pages/RegistrationPage/RegistrationPage';
 import LoginPage from '@pages/LoginPage/LoginPage';

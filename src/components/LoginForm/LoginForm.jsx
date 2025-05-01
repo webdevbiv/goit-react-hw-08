@@ -1,9 +1,10 @@
 import { login } from '@redux/auth/operations';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading } from '@redux/auth/selectors';
 import * as Yup from 'yup';
 import { toast } from 'react-hot-toast';
+import { Box, Button, TextField, CircularProgress } from '@mui/material';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,6 +28,7 @@ const initialValues = {
 const LoginForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
+
   const onSubmit = async (values, { resetForm }) => {
     try {
       await dispatch(login(values)).unwrap();
@@ -40,22 +42,79 @@ const LoginForm = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
       validationSchema={LoginSchema}
+      onSubmit={onSubmit}
     >
-      {() => (
+      {({ errors, touched, handleChange, handleBlur, values }) => (
         <Form>
-          <label htmlFor="email">Email</label>
-          <Field id="email" name="email" type="email" />
-          <ErrorMessage name="email" component="span" />
+          <Box
+            pt="30px"
+            px={2}
+            display="flex"
+            flexDirection="column"
+            maxWidth={350}
+            mx="auto"
+          >
+            <TextField
+              fullWidth
+              mb="23px"
+              id="email"
+              name="email"
+              label="Email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+              sx={{
+                mb: '28px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
 
-          <label htmlFor="password">Password</label>
-          <Field id="password" name="password" type="password" />
-          <ErrorMessage name="password" component="span" />
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              sx={{
+                mb: '30px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '20px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
 
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Log In'}
-          </button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+              width={160}
+              startIcon={isLoading && <CircularProgress size={20} />}
+              sx={{
+                mr: 'auto',
+                ml: 'auto',
+                pl: '30px',
+                pr: '30px',
+                minWidth: '76px',
+              }}
+            >
+              {isLoading ? null : 'Log In'}
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>

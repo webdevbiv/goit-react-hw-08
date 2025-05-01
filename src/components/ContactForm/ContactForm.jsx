@@ -1,11 +1,10 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import s from './ContactForm.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '@redux/contacts/selectors';
+import { selectContacts, selectIsLoading } from '@redux/contacts/selectors';
 import { addContact } from '@redux/contacts/operations';
-import { useId } from 'react';
 import { toast } from 'react-hot-toast';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 
 const NewContactSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,8 +28,7 @@ const initialValues = {
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const nameFieldId = useId();
-  const numberFieldId = useId();
+  const isLoading = useSelector(selectIsLoading);
 
   const onSubmit = async (values, { resetForm }) => {
     const isDuplicate = contacts.some(
@@ -56,20 +54,70 @@ const ContactForm = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
       validationSchema={NewContactSchema}
+      onSubmit={onSubmit}
     >
-      {() => (
-        <Form className={s.contactForm}>
-          <label htmlFor={nameFieldId}>Name</label>
-          <Field id={nameFieldId} name="name" />
-          <ErrorMessage name="name" component="span" />
+      {({ values, handleChange, handleBlur, touched, errors }) => (
+        <Form>
+          <Box display="flex" flexDirection="column" maxWidth={350} mx="auto">
+            <TextField
+              size="small"
+              id="name"
+              name="name"
+              label="Name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.name && Boolean(errors.name)}
+              helperText={touched.name && errors.name}
+              sx={{
+                mb: '28px',
 
-          <label htmlFor={numberFieldId}>Number</label>
-          <Field id={numberFieldId} name="number" type="tel" />
-          <ErrorMessage name="number" component="span" />
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
 
-          <button type="submit">Add Contact</button>
+            <TextField
+              size="small"
+              id="number"
+              name="number"
+              label="Phone Number"
+              type="tel"
+              value={values.number}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.number && Boolean(errors.number)}
+              helperText={touched.number && errors.number}
+              sx={{
+                mb: '28px',
+                '& .MuiFormHelperText-root': {
+                  minHeight: '30px',
+                  position: 'absolute',
+                  top: '100%',
+                },
+              }}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading && <CircularProgress size={20} />}
+              sx={{
+                mr: 'auto',
+                ml: 'auto',
+                pl: '30px',
+                pr: '30px',
+                minWidth: '76px',
+              }}
+            >
+              Add Contact
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>
