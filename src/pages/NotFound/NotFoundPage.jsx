@@ -1,7 +1,10 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { Link, Typography, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '@redux/auth/selectors';
 
-const NotFoundPage = ({ isLoggedIn }) => {
+const NotFoundPage = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <Box
       display="flex"
