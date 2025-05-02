@@ -5,6 +5,7 @@ import {
   fetchContacts,
   updateContact,
 } from './operations';
+import { logout } from '@redux/auth/operations';
 
 const initialState = {
   items: [],
@@ -75,6 +76,13 @@ const contactsSlice = createSlice({
       .addCase(updateContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      // LOGOUT
+      .addCase(logout.fulfilled, state => {
+        state.items = [];
+        state.loading = false;
+        state.error = null;
       });
   },
 });
