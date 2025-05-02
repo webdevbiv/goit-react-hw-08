@@ -21,7 +21,7 @@ const SearchBox = () => {
       mb={1}
     >
       <Typography variant="subtitle1" textAlign="center">
-        Find contacts by name
+        Find contacts by name or phone number
       </Typography>
       <TextField
         size="small"
