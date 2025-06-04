@@ -106,7 +106,8 @@ const ContactForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              disabled={isLoading && <CircularProgress size={20} />}
+              disabled={isLoading}
+              startIcon={isLoading && <CircularProgress size={20} />}
               sx={{
                 mr: 'auto',
                 ml: 'auto',
@@ -115,7 +116,7 @@ const ContactForm = () => {
                 minWidth: '76px',
               }}
             >
-              Add Contact
+              {isLoading ? null : 'Add Contact'}
             </Button>
           </Box>
         </Form>
