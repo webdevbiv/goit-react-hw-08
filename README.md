@@ -1,13 +1,41 @@
-Phonebook App
+# Contacts App
 
-A simple React application for managing contacts. Users can add, search, and delete contacts. All data is persisted in localStorage.
+A phonebook application built with **React**, **Redux Toolkit**, and **Vite**.
+Authenticated users can manage their personal list of contacts using an external API.
 
 ## Features
 
-- **Contact Management:** Easily add and delete contacts.
-- **Real-time Search:** Filter contacts by name as you type.
-- **Data Persistence:** Contacts are automatically saved in localStorage.
+- **User Authentication** – register, log in, and log out via the [GoIT Contacts API](https://connections-api.goit.global/).
+- **Contact Management** – create, update and remove contacts.
+- **Filtering** – search contacts by name in real time.
+- **Persistent State** – authentication and contacts are stored using Redux Persist.
+- **Responsive UI** – built with Material UI components.
 
-## Usage
+## Getting Started
 
-Open the app, add a new contact using the form, and use the search box to filter your contacts.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` in your browser.
+3. Create a production build:
+   ```bash
+   npm run build
+   ```
+4. Lint the project:
+   ```bash
+   npm run lint
+   ```
+
+## Project Structure
+
+- **src/components** – reusable UI components
+- **src/pages** – route-based pages
+- **src/redux** – state management logic
+- **src/routes** – application routing configuration
+
+The repository includes a `vercel.json` file for deployment to Vercel.
